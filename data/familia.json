@@ -1,0 +1,324 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-10-12",
+  "title": "Raízes & Legado · Silva–Teixeira",
+  "sources": [
+    {
+      "id": "familia",
+      "title": "Testemunho familiar",
+      "description": "Informação comunicada pela família em outubro de 2026, ainda por verificar documentalmente."
+    }
+  ],
+  "people": [
+    {
+      "id": "inicio",
+      "name": "Pessoa de referência",
+      "generation": 0,
+      "branch": "root",
+      "confidence": "unknown",
+      "source_ids": [],
+      "display_name": "Início",
+      "notes": "Identidade omitida na versão pública."
+    },
+    {
+      "id": "parent-p",
+      "name": "Progenitor paterno",
+      "generation": 1,
+      "branch": "paterna",
+      "confidence": "unknown",
+      "source_ids": [],
+      "display_name": "Ramo paterno"
+    },
+    {
+      "id": "parent-m",
+      "name": "Progenitora materna",
+      "generation": 1,
+      "branch": "materna",
+      "confidence": "unknown",
+      "source_ids": [],
+      "display_name": "Ramo materno"
+    },
+    {
+      "id": "americo",
+      "name": "Américo",
+      "generation": 2,
+      "branch": "paterna",
+      "confidence": "family",
+      "source_ids": [
+        "familia"
+      ],
+      "origin": "Ventosa · Vouzela"
+    },
+    {
+      "id": "virginia",
+      "name": "Virgínia",
+      "generation": 2,
+      "branch": "paterna",
+      "confidence": "family",
+      "source_ids": [
+        "familia"
+      ],
+      "origin": "Angola"
+    },
+    {
+      "id": "graciano",
+      "name": "Graciano Luís Teixeira",
+      "generation": 2,
+      "branch": "materna",
+      "confidence": "family",
+      "source_ids": [
+        "familia"
+      ],
+      "origin": "Alcofra · Vouzela",
+      "notes": "Apuramento documental dos ascendentes em curso."
+    },
+    {
+      "id": "maria-alice",
+      "name": "Maria Alice Alves da Silva",
+      "generation": 2,
+      "branch": "materna",
+      "confidence": "family",
+      "source_ids": [
+        "familia"
+      ],
+      "origin": "Campia · Vouzela (a confirmar)"
+    },
+    {
+      "id": "americo-pai",
+      "name": "Pai de Américo",
+      "generation": 3,
+      "branch": "paterna",
+      "confidence": "unknown",
+      "source_ids": [],
+      "placeholder": true
+    },
+    {
+      "id": "americo-mae",
+      "name": "Mãe de Américo",
+      "generation": 3,
+      "branch": "paterna",
+      "confidence": "unknown",
+      "source_ids": [],
+      "placeholder": true
+    },
+    {
+      "id": "virginia-pai",
+      "name": "Pai de Virgínia",
+      "generation": 3,
+      "branch": "paterna",
+      "confidence": "unknown",
+      "source_ids": [],
+      "placeholder": true
+    },
+    {
+      "id": "teresa-angola",
+      "name": "Teresa de Jesus",
+      "generation": 3,
+      "branch": "paterna",
+      "confidence": "family",
+      "source_ids": [
+        "familia"
+      ],
+      "origin": "Ramo de Angola",
+      "notes": "Pessoa distinta da Teresa de Jesus do ramo de Campia."
+    },
+    {
+      "id": "graciano-pai",
+      "name": "Pai de Graciano",
+      "generation": 3,
+      "branch": "materna",
+      "confidence": "unknown",
+      "source_ids": [],
+      "placeholder": true
+    },
+    {
+      "id": "graciano-mae",
+      "name": "Mãe de Graciano",
+      "generation": 3,
+      "branch": "materna",
+      "confidence": "unknown",
+      "source_ids": [],
+      "placeholder": true
+    },
+    {
+      "id": "jose-duarte",
+      "name": "José Duarte",
+      "generation": 3,
+      "branch": "materna",
+      "confidence": "family",
+      "source_ids": [
+        "familia"
+      ],
+      "origin": "Região de Campia",
+      "notes": "Ascendência transmitida pela família, ainda por confirmar documentalmente."
+    },
+    {
+      "id": "teresa-campia",
+      "name": "Teresa de Jesus",
+      "generation": 3,
+      "branch": "materna",
+      "confidence": "family",
+      "source_ids": [
+        "familia"
+      ],
+      "origin": "Ramo de Campia",
+      "notes": "Distinta da homónima do ramo angolano."
+    },
+    {
+      "id": "rosaria",
+      "name": "Rosária Maria Luísa",
+      "generation": 4,
+      "branch": "materna",
+      "confidence": "family",
+      "source_ids": [
+        "familia"
+      ]
+    },
+    {
+      "id": "antonio",
+      "name": "António Alves da Silva",
+      "generation": 4,
+      "branch": "materna",
+      "confidence": "family",
+      "source_ids": [
+        "familia"
+      ]
+    },
+    {
+      "id": "ana-jesus",
+      "name": "Ana Maria de Jesus",
+      "generation": 4,
+      "branch": "materna",
+      "confidence": "family",
+      "source_ids": [
+        "familia"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "child": "inicio",
+      "parent": "parent-p",
+      "kind": "father",
+      "confidence": "family"
+    },
+    {
+      "child": "inicio",
+      "parent": "parent-m",
+      "kind": "mother",
+      "confidence": "family"
+    },
+    {
+      "child": "parent-p",
+      "parent": "americo",
+      "kind": "father",
+      "confidence": "family"
+    },
+    {
+      "child": "parent-p",
+      "parent": "virginia",
+      "kind": "mother",
+      "confidence": "family"
+    },
+    {
+      "child": "parent-m",
+      "parent": "graciano",
+      "kind": "father",
+      "confidence": "family"
+    },
+    {
+      "child": "parent-m",
+      "parent": "maria-alice",
+      "kind": "mother",
+      "confidence": "family"
+    },
+    {
+      "child": "americo",
+      "parent": "americo-pai",
+      "kind": "father",
+      "confidence": "family"
+    },
+    {
+      "child": "americo",
+      "parent": "americo-mae",
+      "kind": "mother",
+      "confidence": "family"
+    },
+    {
+      "child": "virginia",
+      "parent": "virginia-pai",
+      "kind": "father",
+      "confidence": "family"
+    },
+    {
+      "child": "virginia",
+      "parent": "teresa-angola",
+      "kind": "mother",
+      "confidence": "family"
+    },
+    {
+      "child": "graciano",
+      "parent": "graciano-pai",
+      "kind": "father",
+      "confidence": "family"
+    },
+    {
+      "child": "graciano",
+      "parent": "graciano-mae",
+      "kind": "mother",
+      "confidence": "family"
+    },
+    {
+      "child": "maria-alice",
+      "parent": "jose-duarte",
+      "kind": "father",
+      "confidence": "family"
+    },
+    {
+      "child": "maria-alice",
+      "parent": "teresa-campia",
+      "kind": "mother",
+      "confidence": "family"
+    },
+    {
+      "child": "jose-duarte",
+      "parent": "rosaria",
+      "kind": "mother",
+      "confidence": "family"
+    },
+    {
+      "child": "teresa-campia",
+      "parent": "antonio",
+      "kind": "father",
+      "confidence": "family"
+    },
+    {
+      "child": "teresa-campia",
+      "parent": "ana-jesus",
+      "kind": "mother",
+      "confidence": "family"
+    }
+  ],
+  "research_questions": [
+    {
+      "id": "r1",
+      "question": "Localizar o assento de casamento de Graciano e Maria Alice e confirmar a filiação."
+    },
+    {
+      "id": "r2",
+      "question": "Encontrar o assento de nascimento ou batismo de José Duarte para verificar a ascendência."
+    },
+    {
+      "id": "r3",
+      "question": "Apurar datas e lugares de Rosária Maria Luísa, António Alves da Silva e Ana Maria de Jesus."
+    },
+    {
+      "id": "r4",
+      "question": "Identificar documentalmente os pais de Graciano."
+    },
+    {
+      "id": "r5",
+      "question": "Identificar os ascendentes dos ramos de Ventosa e Angola."
+    }
+  ]
+}
