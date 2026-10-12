@@ -1,0 +1,21 @@
+name: Atlas Estelar QA
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  quality:
+    name: Testar dados, UI e privacidade
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validar sintaxe JavaScript
+        run: node --check assets/atlas.js
+      - name: Validar JSON
+        run: python3 -m json.tool data/familia.json >/dev/null
+      - name: Contratos genealógicos e UI pública
+        run: python3 -m unittest discover -s tests -p "test_atlas.py" -v

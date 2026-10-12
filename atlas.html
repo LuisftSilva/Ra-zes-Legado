@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive"><meta name="theme-color" content="#080e1b">
+<meta name="description" content="Raízes & Legado — um atlas estelar interativo das histórias familiares, com árvore, ascendentes e descendentes.">
+<title>Raízes & Legado · Atlas Estelar</title>
+<link rel="stylesheet" href="assets/atlas.css"><script src="assets/atlas.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#universo">Saltar para o explorador genealógico</a>
+<header id="header"><a class="logo" href="#/"><span aria-hidden="true">✳</span> RAÍZES <em>&</em> LEGADO</a><span class="navtext">UM ATLAS DE MEMÓRIAS</span><a class="navlink" href="#universo">Explorar ↗</a></header>
+<main id="main">
+<section class="hero" id="inicio">
+<canvas id="stars" aria-hidden="true"></canvas><div class="nebula" aria-hidden="true"></div>
+<div class="hero-content"><div class="eyebrow">UM UNIVERSO DE HISTÓRIAS</div>
+<h1>Todos somos<br><i>feitos de estrelas.</i></h1>
+<p>Antes de nós, houve outras vidas. Outros nomes. Outros caminhos. Entra na constelação da nossa família e segue as ligações que atravessam gerações.</p>
+<a class="primary" href="#universo">Entrar na constelação <span aria-hidden="true">↗</span></a></div>
+<div class="hero-foot"><span>PORTUGAL ↔ ANGOLA</span><span>DESLIZA PARA EXPLORAR ↓</span></div>
+</section>
+<section class="section" id="universo">
+<div class="section-head"><div><div class="eyebrow">01 / O NOSSO UNIVERSO</div><h2>Uma família.<br><i>Infinitas ligações.</i></h2><p>Cada ponto de luz guarda uma pessoa. Escolhe uma estrela e descobre a sua ligação ao resto da família.</p></div>
+<div class="metrics"><div class="metric"><strong id="totalPeople">–</strong><span>Pessoas</span></div><div class="metric"><strong id="totalGenerations">–</strong><span>Gerações</span></div></div></div>
+<div class="explorer">
+<div class="toolbar"><div class="segment" aria-label="Modo de exploração"><button type="button" data-view="constellation" aria-pressed="true">✧ Constelação</button><button type="button" data-view="tree" aria-pressed="false">♧ Árvore</button></div><div class="inputs"><input type="search" id="search" placeholder="Pesquisar uma pessoa…" aria-label="Pesquisar nomes e localidades"><select id="branch" aria-label="Filtrar ramo familiar"><option value="all">Todos os ramos</option><option value="materna">Ramo materno</option><option value="paterna">Ramo paterno</option></select></div></div>
+<div class="focus" id="focusBanner" hidden><span id="focusLabel"></span><button type="button" id="clearFocus">Ver todos ×</button></div>
+<div class="stage" id="stage"><div class="graph-guide" id="graphLabel">CONSTELAÇÃO FAMILIAR</div>
+<svg id="graph" aria-label="Árvore familiar interativa; arrasta para mover, usa + e − para ampliar" role="group" tabindex="0"></svg>
+<div class="controls"><button type="button" id="zoomIn" aria-label="Aproximar">+</button><button type="button" id="zoomOut" aria-label="Afastar">−</button><button type="button" id="zoomFit" aria-label="Enquadrar toda a árvore">⊡</button></div></div>
+<div class="graph-foot"><span>✧ PESSOAS E RELAÇÕES FAMILIARES</span><span id="graphCount"></span></div></div>
+<p class="hint">Arrasta para explorar, amplia com a roda do rato ou os botões. Seleciona um nome para entrar na respetiva ficha. No telemóvel, podes arrastar com o dedo.</p>
+</section>
+<section class="section" id="investigacao"><div class="section-head"><div><div class="eyebrow">02 / INVESTIGAÇÃO</div><h2>A história ainda <i>está a ser escrita.</i></h2><p>Nem todas as peças foram encontradas. Cada novo documento pode revelar uma ligação.</p></div></div><div class="research" id="research"></div></section>
+<section class="ending"><span aria-hidden="true">✳</span><p>“Somos a continuação de histórias<br>que começaram muito antes de nós.”</p><div class="eyebrow">RAÍZES & LEGADO · ARQUIVO VIVO</div></section>
+</main>
+<section id="profile" class="profile" aria-labelledby="profileName" hidden>
+<div class="profile-wrap"><button class="back" type="button" id="back">← Voltar à constelação</button>
+<div class="profile-head"><div class="medallion" aria-hidden="true">✧</div><div><div class="eyebrow" id="profileKicker"></div><h1 id="profileName"></h1><div class="profile-sub" id="profilePlace"></div><div class="badges" id="profileBadges"></div></div></div>
+<div class="profile-grid"><div><div class="eyebrow">01 / PERCURSO</div><h2>Uma vida,<br><i>uma história.</i></h2><div id="biography" class="bio"></div>
+<div class="subsection"><div class="eyebrow">02 / INFORMAÇÃO CONHECIDA</div><div class="facts" id="facts"></div></div>
+<div class="subsection"><div class="eyebrow">03 / ORIGEM DOS DADOS</div><div class="sources" id="sources"></div></div></div>
+<aside class="family-aside"><h3>A sua <i>constelação.</i></h3><p>Segue os caminhos que chegam até esta pessoa e os que continuam depois dela.</p>
+<div class="kin"><button type="button" id="goAncestors"><strong id="ancestorCount">0</strong><small>Ascendentes ↗</small></button><button type="button" id="goDescendants"><strong id="descendantCount">0</strong><small>Descendentes ↘</small></button></div>
+<div class="rel-head">Pais</div><div id="parents"></div><div class="rel-head">Filhos</div><div id="children"></div>
+<div class="privacy">Biografias disponíveis apenas para pessoas cujo falecimento esteja confirmado. A ausência de informação não é preenchida por suposições.</div></aside></div>
+<button class="primary" type="button" id="seeOnTree">Explorar esta linhagem ↗</button>
+</div></section>
+<footer><span>✳ RAÍZES & LEGADO</span><span>INVESTIGAÇÃO EM CURSO · OUTUBRO DE 2026</span><a href="https://github.com/LuisftSilva/Ra-zes-Legado" rel="noopener noreferrer" target="_blank">Arquivo no GitHub ↗</a></footer>
+<div id="announce" aria-live="polite" style="position:absolute;left:-9999px"></div>
+</body></html>
