@@ -37,6 +37,15 @@ jobs:
               assert restricted not in public
           print('Validação concluída:', len(ids), 'pessoas')
           PY
+      - name: Validar JavaScript do website
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          html = Path('index.html').read_text()
+          assert '<script>' in html and '</script>' in html
+          Path('/tmp/raizes.js').write_text(html.split('<script>',1)[1].split('</script>',1)[0])
+          PY
+          node --check /tmp/raizes.js
       - name: Configurar GitHub Pages
         uses: actions/configure-pages@v5
       - name: Carregar ficheiros do site
