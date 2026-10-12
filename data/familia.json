@@ -7,36 +7,61 @@
       "id": "familia",
       "title": "Testemunho familiar",
       "description": "Informação comunicada pela família em outubro de 2026, ainda por verificar documentalmente."
+    },
+    {
+      "id": "investigacao-20261005",
+      "title": "Testemunho familiar de 5 de outubro de 2026",
+      "description": "Parentesco e identificações transmitidos em conversa familiar. Nomes de pessoas potencialmente vivas reduzidos e datas omitidas na versão pública."
+    },
+    {
+      "id": "nucleo-20261012",
+      "title": "Informação familiar transmitida em outubro de 2026",
+      "description": "Identificação das relações familiares; ascendência sujeita a validação documental."
     }
   ],
   "people": [
     {
       "id": "inicio",
-      "name": "Pessoa de referência",
+      "name": "Luís",
       "generation": 0,
       "branch": "root",
       "confidence": "unknown",
       "source_ids": [],
-      "display_name": "Início",
-      "notes": "Identidade omitida na versão pública."
+      "display_name": "Luís",
+      "notes": "Identificação reduzida na versão pública.",
+      "life_status": "living",
+      "public_visibility": "limited"
     },
     {
       "id": "parent-p",
-      "name": "Progenitor paterno",
+      "name": "Nelson",
       "generation": 1,
       "branch": "paterna",
-      "confidence": "unknown",
-      "source_ids": [],
-      "display_name": "Ramo paterno"
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ],
+      "display_name": "Nelson",
+      "placeholder": false,
+      "public_visibility": "limited",
+      "life_status": "unknown",
+      "notes": "Nome próprio publicado; dados biográficos reservados."
     },
     {
       "id": "parent-m",
-      "name": "Progenitora materna",
+      "name": "Ana Maria",
       "generation": 1,
       "branch": "materna",
-      "confidence": "unknown",
-      "source_ids": [],
-      "display_name": "Ramo materno"
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ],
+      "display_name": "Ana Maria",
+      "placeholder": false,
+      "public_visibility": "limited",
+      "life_status": "living",
+      "notes": "Nome próprio publicado; dados biográficos reservados.",
+      "display_order": 50
     },
     {
       "id": "americo",
@@ -193,6 +218,197 @@
       "source_ids": [
         "familia"
       ]
+    },
+    {
+      "id": "jose-1957",
+      "name": "José",
+      "display_name": "José",
+      "generation": 1,
+      "branch": "materna",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ],
+      "life_status": "unknown",
+      "public_visibility": "limited",
+      "notes": "Filho de Graciano e Maria Alice; identidade reduzida por privacidade.",
+      "display_order": 10
+    },
+    {
+      "id": "fernando-1959",
+      "name": "Fernando",
+      "display_name": "Fernando",
+      "generation": 1,
+      "branch": "materna",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ],
+      "life_status": "unknown",
+      "public_visibility": "limited",
+      "notes": "Filho de Graciano e Maria Alice; identidade reduzida por privacidade.",
+      "display_order": 20
+    },
+    {
+      "id": "miguel-1960",
+      "name": "Miguel",
+      "display_name": "Miguel",
+      "generation": 1,
+      "branch": "materna",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ],
+      "life_status": "unknown",
+      "public_visibility": "limited",
+      "notes": "Filho de Graciano e Maria Alice; identidade reduzida por privacidade.",
+      "display_order": 30
+    },
+    {
+      "id": "antonio-1962",
+      "name": "António",
+      "display_name": "António",
+      "generation": 1,
+      "branch": "materna",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ],
+      "life_status": "unknown",
+      "public_visibility": "limited",
+      "notes": "Filho de Graciano e Maria Alice; identidade reduzida por privacidade.",
+      "display_order": 40
+    },
+    {
+      "id": "augusto-1967",
+      "name": "Augusto",
+      "display_name": "Augusto",
+      "generation": 1,
+      "branch": "materna",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ],
+      "life_status": "unknown",
+      "public_visibility": "limited",
+      "notes": "Filho de Graciano e Maria Alice; identidade reduzida por privacidade.",
+      "display_order": 60
+    },
+    {
+      "id": "licinio-1969",
+      "name": "Licínio",
+      "display_name": "Licínio",
+      "generation": 1,
+      "branch": "materna",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ],
+      "life_status": "unknown",
+      "public_visibility": "limited",
+      "notes": "Filho de Graciano e Maria Alice; identidade reduzida por privacidade.",
+      "display_order": 70
+    },
+    {
+      "id": "luis-1978",
+      "name": "Luís",
+      "display_name": "Luís",
+      "generation": 1,
+      "branch": "materna",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ],
+      "life_status": "unknown",
+      "public_visibility": "limited",
+      "notes": "Filho de Graciano e Maria Alice; identidade reduzida por privacidade.",
+      "display_order": 80
+    },
+    {
+      "id": "paulo-jorge-1982",
+      "name": "Paulo Jorge",
+      "display_name": "Paulo Jorge",
+      "generation": 1,
+      "branch": "materna",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ],
+      "life_status": "unknown",
+      "public_visibility": "limited",
+      "notes": "Filho de Graciano e Maria Alice; identidade reduzida por privacidade.",
+      "display_order": 90
+    },
+    {
+      "id": "maria-edina",
+      "name": "Maria Edina",
+      "display_name": "Maria Edina",
+      "generation": 1,
+      "branch": "materna",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ],
+      "life_status": "unknown",
+      "public_visibility": "limited",
+      "notes": "Cônjuge de José, irmão de Ana Maria.",
+      "display_order": 10.5
+    },
+    {
+      "id": "aldina",
+      "name": "Aldina",
+      "display_name": "Aldina",
+      "generation": 2,
+      "branch": "materna",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ],
+      "life_status": "unknown",
+      "public_visibility": "limited",
+      "origin": "Emigração para França, segundo relato familiar",
+      "notes": "Irmã de Maria Alice; desconhece-se se partilhavam ambos os progenitores."
+    },
+    {
+      "id": "diana-prima",
+      "name": "Diana",
+      "display_name": "Diana",
+      "generation": 0,
+      "branch": "materna",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ],
+      "life_status": "unknown",
+      "public_visibility": "limited",
+      "notes": "Filha de José e Maria Edina; dados pessoais reservados."
+    },
+    {
+      "id": "rui-primo",
+      "name": "Rui",
+      "display_name": "Rui",
+      "generation": 0,
+      "branch": "materna",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ],
+      "life_status": "unknown",
+      "public_visibility": "limited",
+      "notes": "Filho de José e Maria Edina; dados pessoais reservados."
+    },
+    {
+      "id": "filha-reservada",
+      "name": "Filha (identidade reservada)",
+      "display_name": "Filha (identidade reservada)",
+      "generation": -1,
+      "branch": "root",
+      "confidence": "private",
+      "source_ids": [],
+      "life_status": "living",
+      "public_visibility": "hidden",
+      "placeholder": true,
+      "notes": "Identidade de uma descendente menor omitida intencionalmente."
     }
   ],
   "relations": [
@@ -297,6 +513,195 @@
       "parent": "ana-jesus",
       "kind": "mother",
       "confidence": "family"
+    },
+    {
+      "child": "jose-1957",
+      "parent": "graciano",
+      "kind": "father",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ]
+    },
+    {
+      "child": "jose-1957",
+      "parent": "maria-alice",
+      "kind": "mother",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ]
+    },
+    {
+      "child": "fernando-1959",
+      "parent": "graciano",
+      "kind": "father",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ]
+    },
+    {
+      "child": "fernando-1959",
+      "parent": "maria-alice",
+      "kind": "mother",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ]
+    },
+    {
+      "child": "miguel-1960",
+      "parent": "graciano",
+      "kind": "father",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ]
+    },
+    {
+      "child": "miguel-1960",
+      "parent": "maria-alice",
+      "kind": "mother",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ]
+    },
+    {
+      "child": "antonio-1962",
+      "parent": "graciano",
+      "kind": "father",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ]
+    },
+    {
+      "child": "antonio-1962",
+      "parent": "maria-alice",
+      "kind": "mother",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ]
+    },
+    {
+      "child": "augusto-1967",
+      "parent": "graciano",
+      "kind": "father",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ]
+    },
+    {
+      "child": "augusto-1967",
+      "parent": "maria-alice",
+      "kind": "mother",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ]
+    },
+    {
+      "child": "licinio-1969",
+      "parent": "graciano",
+      "kind": "father",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ]
+    },
+    {
+      "child": "licinio-1969",
+      "parent": "maria-alice",
+      "kind": "mother",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ]
+    },
+    {
+      "child": "luis-1978",
+      "parent": "graciano",
+      "kind": "father",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ]
+    },
+    {
+      "child": "luis-1978",
+      "parent": "maria-alice",
+      "kind": "mother",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ]
+    },
+    {
+      "child": "paulo-jorge-1982",
+      "parent": "graciano",
+      "kind": "father",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ]
+    },
+    {
+      "child": "paulo-jorge-1982",
+      "parent": "maria-alice",
+      "kind": "mother",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ]
+    },
+    {
+      "child": "diana-prima",
+      "parent": "jose-1957",
+      "kind": "father",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ]
+    },
+    {
+      "child": "diana-prima",
+      "parent": "maria-edina",
+      "kind": "mother",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ]
+    },
+    {
+      "child": "rui-primo",
+      "parent": "jose-1957",
+      "kind": "father",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ]
+    },
+    {
+      "child": "rui-primo",
+      "parent": "maria-edina",
+      "kind": "mother",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ]
+    },
+    {
+      "child": "filha-reservada",
+      "parent": "inicio",
+      "kind": "father",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ]
     }
   ],
   "research_questions": [
@@ -319,6 +724,45 @@
     {
       "id": "r5",
       "question": "Identificar os ascendentes dos ramos de Ventosa e Angola."
+    },
+    {
+      "id": "r6",
+      "question": "Verificar documentalmente os nomes completos, nascimentos e relações dos nove filhos de Graciano e Maria Alice."
+    },
+    {
+      "id": "r7",
+      "question": "Confirmar se Aldina e Maria Alice partilham ambos os pais, e documentar a emigração para França."
+    },
+    {
+      "id": "r8",
+      "question": "Localizar provas documentais dos casamentos e descendentes dos filhos de Graciano e Maria Alice."
+    }
+  ],
+  "unions": [
+    {
+      "id": "jose-maria-edina",
+      "people": [
+        "jose-1957",
+        "maria-edina"
+      ],
+      "kind": "spouses",
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ]
+    }
+  ],
+  "sibling_relations": [
+    {
+      "people": [
+        "aldina",
+        "maria-alice"
+      ],
+      "confidence": "family",
+      "source_ids": [
+        "investigacao-20261005"
+      ],
+      "note": "Irmãs segundo testemunho; não se assumem automaticamente progenitores comuns."
     }
   ]
 }

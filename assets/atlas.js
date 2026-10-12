@@ -8,6 +8,10 @@ function sv(tag,attributes,text){let e=document.createElementNS(NS,tag);for(let 
 function nameOf(p){return p.display_name||p.name}
 function parentOf(id){return(state.parents.get(id)||[]).map(e=>state.people.get(e.parent)).filter(Boolean)}
 function childOf(id){return(state.children.get(id)||[]).map(e=>state.people.get(e.child)).filter(Boolean)}
+function spouseOf(id){return(state.data.unions||[]).filter(x=>x.people?.includes(id)).flatMap(x=>x.people.filter(other=>other!==id).map(other=>state.people.get(other))).filter(Boolean)}
+function siblingOf(id){let result=new Map();for(let parent of parentOf(id))for(let sibling of childOf(parent.id))if(sibling.id!==id)result.set(sibling.id,sibling);
+for(let r of state.data.sibling_relations||[])if(r.people?.includes(id))for(let other of r.people)if(other!==id&&state.people.has(other))result.set(other,state.people.get(other));
+return [...result.values()]}
 function relatedSet(id,kind){let seen=new Set([id]),q=[id];while(q.length){let current=q.shift(),next=kind==='ancestors'?parentOf(current):childOf(current);for(let p of next)if(!seen.has(p.id)){seen.add(p.id);q.push(p.id)}}return seen}
 function confirmedDeath(p){return p.life_status==='deceased'&&p.death&&p.death.confirmed===true}
 function publicBio(p){return confirmedDeath(p)&&Array.isArray(p.biography)?p.biography.filter(x=>typeof x==='string'&&x.trim()):[]}
@@ -16,15 +20,53 @@ function matches(p){if(!state.query)return true;return[p.name,p.display_name||''
 function indexData(d){state.data=d;state.people=new Map(d.people.map(p=>[p.id,p]));state.root=d.people.find(p=>p.generation===0)?.id||d.people[0]?.id;state.selected=state.root;state.parents.clear();state.children.clear();
 for(let e of d.relations){if(!state.parents.has(e.child))state.parents.set(e.child,[]);if(!state.children.has(e.parent))state.children.set(e.parent,[]);state.parents.get(e.child).push(e);state.children.get(e.parent).push(e)}
 for(let arr of state.parents.values())arr.sort((a,b)=>({father:0,mother:1}[a.kind]??3)-({father:0,mother:1}[b.kind]??3))}
-function constellation(){let out=new Map();
-function place(id,lo,hi){if(out.has(id))return;let p=state.people.get(id);if(!p)return;let theta=(lo+hi)/2,rad=[0,240,440,640,840,1000][p.generation]||1000+(p.generation-5)*130;
-out.set(id,{x:rad*Math.cos(theta),y:rad*Math.sin(theta)});
-let parents=state.parents.get(id)||[],step=(hi-lo)/Math.max(1,parents.length);parents.forEach((rel,i)=>place(rel.parent,lo+i*step,lo+(i+1)*step))}
-place(state.root,-Math.PI,Math.PI);
-state.data.people.filter(p=>!out.has(p.id)).forEach((p,i,arr)=>{let t=Math.PI*2*i/Math.max(1,arr.length);out.set(p.id,{x:1100*Math.cos(t),y:1100*Math.sin(t)})});return out}
-function tree(){let out=new Map(),row=0;
-function visit(id){if(out.has(id))return out.get(id).y;let p=state.people.get(id);if(!p)return 0;let pp=state.parents.get(id)||[],ys=pp.map(e=>visit(e.parent));let y=ys.length?ys.reduce((a,b)=>a+b,0)/ys.length:row++*150;out.set(id,{x:p.generation*275,y});return y}
-visit(state.root);state.data.people.filter(p=>!out.has(p.id)).forEach(p=>out.set(p.id,{x:p.generation*275,y:row++*150}));let ys=[...out.values()].map(v=>v.y),offset=(Math.min(...ys)+Math.max(...ys))/2;out.forEach(p=>p.y-=offset);return out}
+
+function orderLayer(people){return people.sort((a,b)=>{
+ const da=Number.isFinite(a.display_order)?a.display_order:100,db=Number.isFinite(b.display_order)?b.display_order:100;
+ return da-db||a.name.localeCompare(b.name,'pt-PT')})}
+function constellation(){
+ const out=new Map(),rings=[0,900,1180,1480,1780];
+ for(let generation of [...new Set(state.data.people.map(p=>p.generation))].sort((a,b)=>a-b)){
+  let items=state.data.people.filter(p=>p.generation===generation);
+  if(generation===0){
+   const root=state.people.get(state.root);if(root)out.set(root.id,{x:0,y:0});
+   const cousins=items.filter(p=>p.id!==state.root);
+   orderLayer(cousins).forEach((p,i)=>out.set(p.id,{x:250+i*215,y:500+i*95}));
+   continue;
+  }
+  if(generation<0){
+   orderLayer(items).forEach((p,i)=>out.set(p.id,{x:-270-(i%3)*240,y:(i-Math.floor(items.length/2))*145}));
+   continue;
+  }
+  for(let branch of ['paterna','materna','root']){
+   let entries=orderLayer(items.filter(p=>p.branch===branch));
+   if(!entries.length)continue;
+   const minRadius=rings[generation]||1780+(generation-4)*260;
+   const radius=Math.max(minRadius,(entries.length*215)/2.3);
+   const a=branch==='paterna'?-2.86:branch==='materna'?.28:-Math.PI;
+   const z=branch==='paterna'?-.30:branch==='materna'?2.86:Math.PI;
+   entries.forEach((p,i)=>{const theta=a+(z-a)*(i+.5)/entries.length;
+    out.set(p.id,{x:radius*Math.cos(theta),y:radius*Math.sin(theta)})});
+  }
+ }
+ return out;
+}
+function tree(){
+ const out=new Map(),gens=[...new Set(state.data.people.map(p=>p.generation))].sort((a,b)=>a-b);
+ for(let generation of gens){
+  const items=state.data.people.filter(p=>p.generation===generation);
+  for(let branch of ['paterna','root','materna']){
+   const arr=orderLayer(items.filter(p=>p.branch===branch));
+   if(!arr.length)continue;
+   let center=branch==='paterna'?-900:branch==='materna'?730:0;
+   let step=195;
+   if(generation===0&&branch==='materna')center=430;
+   if(generation<0)center=0;
+   arr.forEach((p,i)=>out.set(p.id,{x:generation*305,y:center+(i-(arr.length-1)/2)*step}));
+  }
+ }
+ return out;
+}
 function labelLines(str){if(str.length<22)return[str];let list=[''];for(let word of str.split(' ')){let i=list.length-1;if((list[i]+' '+word).trim().length>19&&list[i]&&list.length<3)list.push(word);else list[i]=(list[i]+' '+word).trim()}return list}
 function apply(){if(state.group)state.group.setAttribute('transform','translate('+state.tx+' '+state.ty+') scale('+state.scale+')')}
 function fit(){let pts=[...state.points].filter(([id])=>state.shown.has(id)).map(([,v])=>v);if(!pts.length)return;let box=$('#graph').getBoundingClientRect(),minX=Math.min(...pts.map(v=>v.x))-120,maxX=Math.max(...pts.map(v=>v.x))+120,minY=Math.min(...pts.map(v=>v.y))-100,maxY=Math.max(...pts.map(v=>v.y))+100;
@@ -33,11 +75,17 @@ function zoom(k,x,y){let rect=$('#graph').getBoundingClientRect(),cx=x??rect.wid
 function renderGraph(reset){if(!state.data||$('#main').hidden)return;let scene=$('#graph'),box=scene.getBoundingClientRect();if(box.width<30||box.height<30)return;scene.replaceChildren();scene.setAttribute('viewBox','0 0 '+box.width+' '+box.height);
 let group=sv('g');scene.append(group);state.group=group;state.points=state.mode==='tree'?tree():constellation();
 let entries=state.data.people.filter(visible);state.shown=new Set(entries.map(p=>p.id));
-if(state.mode==='constellation'){[240,440,640,840].forEach(r=>group.append(sv('circle',{cx:0,cy:0,r:r,class:'graph-orbit'})))}else{[0,1,2,3,4].forEach(n=>group.append(sv('line',{x1:n*275,x2:n*275,y1:-1700,y2:1700,stroke:'#5a6b87','stroke-opacity':'.16','stroke-dasharray':'5 13'})))}
+if(state.mode==='constellation'){[400,900,1180,1480,1780].forEach(r=>group.append(sv('circle',{cx:0,cy:0,r:r,class:'graph-orbit'})))}else{[-1,0,1,2,3,4].forEach(n=>group.append(sv('line',{x1:n*305,x2:n*305,y1:-2800,y2:2800,stroke:'#5a6b87','stroke-opacity':'.16','stroke-dasharray':'5 13'})))}
 for(let e of state.data.relations){if(!state.shown.has(e.child)||!state.shown.has(e.parent))continue;let a=state.points.get(e.child),b=state.points.get(e.parent);if(!a||!b)continue;let d=state.mode==='tree'?'M'+a.x+','+a.y+' C'+(a.x+140)+','+a.y+' '+(b.x-140)+','+b.y+' '+b.x+','+b.y:'M'+a.x+','+a.y+' Q'+((a.x+b.x)*.53)+','+((a.y+b.y)*.53)+' '+b.x+','+b.y;
 group.append(sv('path',{d:d,class:'graph-link'+(state.selected===e.child||state.selected===e.parent?' active':'')}))}
+for(let relation of state.data.unions||[]){let [u,v]=relation.people||[],a=state.points.get(u),b=state.points.get(v);
+ if(!state.shown.has(u)||!state.shown.has(v)||!a||!b)continue;
+ group.append(sv('path',{d:'M'+a.x+','+a.y+' L'+b.x+','+b.y,class:'graph-union'}))}
+for(let relation of state.data.sibling_relations||[]){let [u,v]=relation.people||[],a=state.points.get(u),b=state.points.get(v);
+ if(!state.shown.has(u)||!state.shown.has(v)||!a||!b)continue;
+ group.append(sv('path',{d:'M'+a.x+','+a.y+' L'+b.x+','+b.y,class:'graph-sibling'}))}
 for(let p of entries){let pos=state.points.get(p.id);if(!pos)continue;let g=sv('g',{transform:'translate('+pos.x+' '+pos.y+')',class:'person-node'+(p.placeholder?' unknown':'')+(state.selected===p.id?' current':'')+(!matches(p)?' dim':''),tabindex:'0',role:'button','aria-label':'Abrir ficha individual: '+nameOf(p),'data-id':p.id});
-g.append(sv('rect',{x:-96,y:-53,width:192,height:106,rx:6,class:'panel'}));g.append(sv('circle',{cx:-76,cy:-34,r:4,class:'symbol'}));g.append(sv('text',{x:-64,y:-30,class:'label'},'GERAÇÃO '+(p.generation+1)));
+g.append(sv('rect',{x:-96,y:-53,width:192,height:106,rx:6,class:'panel'}));g.append(sv('circle',{cx:-76,cy:-34,r:4,class:'symbol'}));g.append(sv('text',{x:-64,y:-30,class:'label'},(p.generation<0?'DESCENDENTE':'GERAÇÃO '+(p.generation+1))));
 let lines=labelLines(nameOf(p));lines.forEach((line,i)=>g.append(sv('text',{x:-74,y:(lines.length===1?10:-5)+i*18,class:'name',style:'font-size:'+(lines.length>2?14:lines.length===2?16:17)+'px'},line)));
 g.append(sv('text',{x:-74,y:41,class:'where'},(p.origin||(p.placeholder?'Por identificar':'Ramo '+p.branch)).slice(0,30)));
 g.addEventListener('click',ev=>{if(state.moved){ev.preventDefault();return}openProfile(p.id)});g.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();openProfile(p.id)}});group.append(g)}
@@ -57,7 +105,7 @@ function openProfile(id){if(!state.people.has(id))return;state.selected=id;let h
 function makeFact(label,value){let f=node('div','fact');f.append(node('small','',label),node('b','',value||'Por identificar'));return f}
 function relatives(list,target){let root=$(target);root.replaceChildren();if(!list.length){root.append(node('p','hint','Ainda não há relações identificadas.'));return}list.forEach(p=>{let b=node('button','relative',nameOf(p)+'  ↗');b.type='button';b.onclick=()=>openProfile(p.id);root.append(b)})}
 function profile(id){let p=state.people.get(id);if(!p)return;state.selected=id;showProfile();
-$('#profileKicker').textContent='GERAÇÃO '+(p.generation+1)+' / '+(p.branch==='root'?'PONTO DE PARTIDA':'RAMO '+p.branch.toUpperCase());$('#profileName').textContent=nameOf(p);$('#profilePlace').textContent=p.origin||'Localidade por identificar';
+$('#profileKicker').textContent=(p.generation<0?'DESCENDENTE':'GERAÇÃO '+(p.generation+1))+' / '+(p.branch==='root'?'PONTO DE PARTIDA':'RAMO '+p.branch.toUpperCase());$('#profileName').textContent=nameOf(p);$('#profilePlace').textContent=p.origin||'Localidade por identificar';
 let badges=$('#profileBadges');badges.replaceChildren();badges.append(node('span','',p.placeholder?'Por identificar':'Arquivo genealógico'));if(p.confidence==='family')badges.append(node('span','','Testemunho familiar'));if(confirmedDeath(p))badges.append(node('span','','Falecimento confirmado'));
 let b=$('#biography');b.replaceChildren();let paragraphs=publicBio(p);
 if(paragraphs.length){paragraphs.forEach(t=>b.append(node('p','',t)))}else if(p.life_status==='living'){b.append(node('p','','Biografia não publicada: pessoa viva.'))}else{b.append(node('p','','Ainda não existe biografia validada. O falecimento e os acontecimentos de vida precisam de confirmação antes de se publicar uma narrativa.'))}
@@ -65,7 +113,7 @@ let fact=$('#facts');fact.replaceChildren();fact.append(makeFact('Data de nascim
 if(p.life_status!=='living'&&p.notes)fact.append(makeFact('Relato ou apontamento familiar',p.notes));
 let source=$('#sources');source.replaceChildren();let s=(p.source_ids||[]).map(id=>state.data.sources.find(x=>x.id===id)).filter(Boolean);if(!s.length)source.append(node('p','hint','Ainda não foram associadas fontes a este registo.'));
 else s.forEach(x=>{let art=node('article');art.append(node('b','',x.title),node('p','',x.description));source.append(art)});
-let aa=relatedSet(id,'ancestors'),dd=relatedSet(id,'descendants');$('#ancestorCount').textContent=[...aa].filter(x=>x!==id&&!state.people.get(x)?.placeholder).length;$('#descendantCount').textContent=[...dd].filter(x=>x!==id&&!state.people.get(x)?.placeholder).length;relatives(parentOf(id),'#parents');relatives(childOf(id),'#children');
+let aa=relatedSet(id,'ancestors'),dd=relatedSet(id,'descendants');$('#ancestorCount').textContent=[...aa].filter(x=>x!==id&&!state.people.get(x)?.placeholder).length;$('#descendantCount').textContent=[...dd].filter(x=>x!==id&&!state.people.get(x)?.placeholder).length;relatives(parentOf(id),'#parents');relatives(childOf(id),'#children');relatives(spouseOf(id),'#partners');relatives(siblingOf(id),'#siblings');
 $('#goAncestors').onclick=()=>focusRelatives(id,'ancestors');$('#goDescendants').onclick=()=>focusRelatives(id,'descendants');$('#seeOnTree').onclick=()=>focusRelatives(id,'ancestors');
 document.title=nameOf(p)+' · Raízes & Legado';$('#announce').textContent='Ficha de '+nameOf(p)}
 function focusRelatives(id,kind){let p=state.people.get(id);state.focus={ids:relatedSet(id,kind),id,kind};state.branch='all';state.query='';$('#branch').value='all';$('#search').value='';$('#focusBanner').hidden=false;$('#focusLabel').textContent=(kind==='ancestors'?'Ascendentes de ':'Descendentes de ')+nameOf(p);goExplorer()}
