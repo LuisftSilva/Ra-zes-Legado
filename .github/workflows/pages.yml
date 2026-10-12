@@ -1,0 +1,48 @@
+name: Validar e publicar site
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validar JSON
+        run: python3 -m json.tool data/familia.json > /dev/null
+      - name: Validar privacidade e filiação
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          d = json.loads(Path('data/familia.json').read_text())
+          ids = {p['id']: p for p in d['people']}
+          assert len(ids) == len(d['people'])
+          for r in d['relations']:
+              assert r['child'] in ids and r['parent'] in ids
+              assert ids[r['parent']]['generation'] == ids[r['child']]['generation'] + 1
+          public = Path('data/familia.json').read_text()
+          for restricted in ('Simão do Coelhoso', 'Luís Filipe', 'pai incógnito'):
+              assert restricted not in public
+          print('Validação concluída:', len(ids), 'pessoas')
+          PY
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Carregar ficheiros do site
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: .
+      - name: Publicar GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
